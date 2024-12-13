@@ -1,0 +1,404 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>operators</title>
+        <style>
+        /* Base styles */
+:root {
+    --tv-primary-color: #2962FF;
+    --tv-secondary-color: #1E88E5;
+    --tv-background-color: #FFFFFF;
+    --tv-border-color: #e0e3eb;
+    --tv-text-color: #131722;
+    --tv-text-secondary: #787B86;
+    --tv-code-background: #F0F3FA;
+}
+
+body {
+    font-family: -apple-system,BlinkMacSystemFont,Trebuchet MS,Roboto,Ubuntu,sans-serif;
+    line-height: 1.6;
+    color: var(--tv-text-color);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #F8F9FD;
+}
+
+/* TOC styles */
+#toc-container {
+    background: var(--tv-background-color);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid var(--tv-border-color);
+}
+
+.section-dropdown {
+    margin: 12px 0;
+}
+
+.section-title {
+    background: var(--tv-primary-color);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.section-content {
+    display: none;
+    padding: 12px 16px;
+    background: var(--tv-code-background);
+    border-radius: 0 0 4px 4px;
+    margin-top: 1px;
+}
+
+.section-content.active {
+    display: block;
+}
+
+.section-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.section-content li {
+    margin: 8px 0;
+}
+
+.section-content a {
+    color: var(--tv-primary-color);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.section-content a:hover {
+    text-decoration: underline;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid var(--tv-border-color);
+    border-radius: 4px;
+    font-size: 14px;
+    background: var(--tv-code-background);
+}
+
+/* Content section styles */
+.content-section {
+    background: var(--tv-background-color);
+    padding: 24px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid var(--tv-border-color);
+}
+
+/* Header styles */
+.tv-pine-reference-item__header {
+    font-size: 24px;
+    color: var(--tv-text-color);
+    margin: 0 0 20px 0;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--tv-border-color);
+    font-weight: 600;
+}
+
+.tv-pine-reference-item__sub-header {
+    color-scheme: light;
+    font-feature-settings: "tnum" on,"lnum" on;
+    color: #5d606b;
+    font-size: 10px;
+    margin-top: 24px;
+    text-transform: uppercase;
+}
+
+/* Text styles */
+.tv-pine-reference-item__text {
+    margin: 12px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--tv-text-color);
+}
+
+/* Code block styles */
+pre {
+    background: var(--tv-code-background);
+    padding: 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    border: 1px solid var(--tv-border-color);
+    margin: 16px 0;
+}
+
+code {
+    font-family: 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+    font-size: 14px;
+    color: var(--tv-text-color);
+}
+
+/* Type section */
+.type-section {
+    /*
+    background: var(--tv-code-background);
+    padding: 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+    border: 1px solid var(--tv-border-color);
+    */
+}
+
+.type-section strong {
+    color: var(--tv-text-color);
+    font-weight: 600;
+}
+
+/* Example section */
+.example-section {
+    /*background: var(--tv-code-background);
+    padding: 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+    border: 1px solid var(--tv-border-color);*/
+}
+
+.example-section strong {
+    color-scheme: light;
+    font-feature-settings: "tnum" on,"lnum" on;
+    color: #5d606b;
+    font-size: 10px;
+    margin-top: 24px;
+    text-transform: uppercase;
+}
+
+/* See also section */
+.tv-pine-reference-item__see-also {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.tv-tag-label {
+    background: var(--tv-code-background);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--tv-primary-color);
+    border: 1px solid var(--tv-border-color);
+}
+
+/* Navigation */
+.nav-buttons {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    gap: 12px;
+    z-index: 1000;
+}
+
+.nav-button {
+    background: var(--tv-primary-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.nav-button:hover {
+    background: var(--tv-secondary-color);
+}
+
+/* Function signatures */
+.tv-pine-reference-item__signature {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--tv-code-background);
+    padding: 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+    border: 1px solid var(--tv-border-color);
+    overflow-x: auto;
+}
+
+/* Parameter lists */
+.tv-pine-reference-item__parameters {
+    margin: 16px 0;
+}
+
+.tv-pine-reference-item__parameter {
+    margin: 12px 0;
+    padding-left: 16px;
+    border-left: 3px solid var(--tv-border-color);
+}
+
+.parameter-name {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--tv-primary-color);
+    font-weight: 600;
+}
+
+/* Returns section */
+.tv-pine-reference-item__returns {
+    margin: 16px 0;
+    padding: 16px;
+    background: var(--tv-code-background);
+    border-radius: 4px;
+    border: 1px solid var(--tv-border-color);
+}
+
+/* Description lists */
+dl {
+    margin: 16px 0;
+}
+
+dt {
+    font-weight: 600;
+    color: var(--tv-text-color);
+    margin-top: 12px;
+}
+
+dd {
+    margin-left: 16px;
+    color: var(--tv-text-secondary);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid var(--tv-border-color);
+    text-align: left;
+}
+
+th {
+    background: var(--tv-code-background);
+    font-weight: 600;
+}
+        </style>
+    </head>
+    <body id="top">
+        <h1 class="tv-pine-reference-item__header">operators</h1>
+        <section id="pine-script-reference_v5_op_!=.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_!=</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">!=</h3></div></div><div class="tv-pine-reference-item__text tv-text">Not equal to. Applicable to expressions of any type.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 != expr2</pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Boolean value, or series of boolean values.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_%.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_%</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">%</h3></div></div><div class="tv-pine-reference-item__text tv-text">Modulo (integer remainder). Applicable to numerical expressions.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 % expr2</pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Integer or float value, or series of values.</div><div class="tv-pine-reference-item__sub-header">Remarks</div><div class="tv-pine-reference-item__text tv-text">In Pine Script®, when the integer remainder is calculated, the quotient is truncated, i.e. rounded towards the lowest absolute value. The resulting value will have the same sign as the dividend.</div><div class="tv-pine-reference-item__text tv-text">Example: <code>-1 % 9 = -1 - 9 * int(-1/9) = -1 - 9 * int(-0.111) = -1 - 9 * 0 = -1.</code></div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_%=.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_%=</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">%=</h3></div></div><div class="tv-pine-reference-item__text tv-text">Modulo assignment. Applicable to numerical expressions.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 %= expr2</pre><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="op_%=" data-lang="pine_v5"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">5</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"%="</span><span class="mtk13">)</span></span><br/><span><span class="mtk9">// Equals to expr1 = expr1 % expr2.</span></span><br/><span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">3</span></span><br/><span><span class="mtk33">b</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">3</span></span><br/><span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">%=</span><span class="mtk1"> </span><span class="mtk33">b</span></span><br/><span><span class="mtk9">// Result: a = 0.</span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk33">a</span><span class="mtk13">)</span></span><br/></code></pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Integer or float value, or series of values.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_*.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_*</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">*</h3></div></div><div class="tv-pine-reference-item__text tv-text">Multiplication. Applicable to numerical expressions.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 * expr2</pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Integer or float value, or series of values.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_*=.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_*=</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">*=</h3></div></div><div class="tv-pine-reference-item__text tv-text">Multiplication assignment. Applicable to numerical expressions.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 *= expr2</pre><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="op_*=" data-lang="pine_v5"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">5</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"*="</span><span class="mtk13">)</span></span><br/><span><span class="mtk9">// Equals to expr1 = expr1 * expr2.</span></span><br/><span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">2</span></span><br/><span><span class="mtk33">b</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">3</span></span><br/><span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">*=</span><span class="mtk1"> </span><span class="mtk33">b</span></span><br/><span><span class="mtk9">// Result: a = 6.</span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk33">a</span><span class="mtk13">)</span></span><br/></code></pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Integer or float value, or series of values.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_+.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_+</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">+</h3></div></div><div class="tv-pine-reference-item__text tv-text">Addition or unary plus. Applicable to numerical expressions or strings.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 + expr2</pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Binary <code>+</code> for strings returns concatenation of expr1 and expr2</div><div class="tv-pine-reference-item__text tv-text">For numbers returns integer or float value, or series of values:</div><div class="tv-pine-reference-item__text tv-text">Binary <code>+</code> returns expr1 plus expr2.</div><div class="tv-pine-reference-item__text tv-text">Unary <code>+</code> returns expr (does nothing added just for the symmetry with the unary - operator).</div><div class="tv-pine-reference-item__sub-header">Remarks</div><div class="tv-pine-reference-item__text tv-text">You may use arithmetic operators with numbers as well as with series variables. In case of usage with series the operators are applied elementwise.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_+=.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_+=</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">+=</h3></div></div><div class="tv-pine-reference-item__text tv-text">Addition assignment. Applicable to numerical expressions or strings.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 += expr2</pre><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="op_+=" data-lang="pine_v5"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">5</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"+="</span><span class="mtk13">)</span></span><br/><span><span class="mtk9">// Equals to expr1 = expr1 + expr2.</span></span><br/><span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">2</span></span><br/><span><span class="mtk33">b</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">3</span></span><br/><span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">+=</span><span class="mtk1"> </span><span class="mtk33">b</span></span><br/><span><span class="mtk9">// Result: a = 5.</span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk33">a</span><span class="mtk13">)</span></span><br/></code></pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">For strings returns concatenation of expr1 and expr2. For numbers returns integer or float value, or series of values.</div><div class="tv-pine-reference-item__sub-header">Remarks</div><div class="tv-pine-reference-item__text tv-text">You may use arithmetic operators with numbers as well as with series variables. In case of usage with series the operators are applied elementwise.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_-.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_-</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">-</h3></div></div><div class="tv-pine-reference-item__text tv-text">Subtraction or unary minus. Applicable to numerical expressions.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 - expr2</pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Returns integer or float value, or series of values:</div><div class="tv-pine-reference-item__text tv-text">Binary <code>-</code> returns expr1 minus expr2.</div><div class="tv-pine-reference-item__text tv-text">Unary <code>-</code> returns the negation of expr.</div><div class="tv-pine-reference-item__sub-header">Remarks</div><div class="tv-pine-reference-item__text tv-text">You may use arithmetic operators with numbers as well as with series variables. In case of usage with series the operators are applied elementwise.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_-=.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_-=</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">-=</h3></div></div><div class="tv-pine-reference-item__text tv-text">Subtraction assignment. Applicable to numerical expressions.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 -= expr2</pre><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="op_-=" data-lang="pine_v5"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">5</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"-="</span><span class="mtk13">)</span></span><br/><span><span class="mtk9">// Equals to expr1 = expr1 - expr2.</span></span><br/><span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">2</span></span><br/><span><span class="mtk33">b</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">3</span></span><br/><span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">-=</span><span class="mtk1"> </span><span class="mtk33">b</span></span><br/><span><span class="mtk9">// Result: a = -1.</span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk33">a</span><span class="mtk13">)</span></span><br/></code></pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Integer or float value, or series of values.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_:=.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_:=</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">:=</h3></div></div><div class="tv-pine-reference-item__text tv-text">Reassignment operator. It is used to assign a new value to a previously declared variable.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">&lt;var_name&gt; := &lt;new_value&gt;</pre><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="op_:=" data-lang="pine_v5"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">5</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"My script"</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk33">myVar</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">10</span></span><br/><span><span></span></span><br/><span><span class="mtk18">if</span><span class="mtk1"> </span><span class="mtk11">close</span><span class="mtk1"> </span><span class="mtk18">&gt;</span><span class="mtk1"> </span><span class="mtk11">open</span></span><br/><span><span class="mtk1">    </span><span class="mtk9">// Modifies the existing global scope `myVar` vari</span><span class="mtk9">able by changing its value from 10 to 20.</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">myVar</span><span class="mtk1"> </span><span class="mtk18">:=</span><span class="mtk1"> </span><span class="mtk12">20</span></span><br/><span><span class="mtk1">    </span><span class="mtk9">// Creates a new `myVar` variable local to the `if</span><span class="mtk9">` condition and unreachable from the global scope.</span></span><br/><span><span class="mtk1">    </span><span class="mtk9">// Does not affect the `myVar` declared in global </span><span class="mtk9">scope.</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">myVar</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">30</span></span><br/><span><span></span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk33">myVar</span><span class="mtk13">)</span></span><br/></code></pre></div>
+</div>
+</section><section id="pine-script-reference_v5_op_<.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_<</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">&lt;</h3></div></div><div class="tv-pine-reference-item__text tv-text">Less than. Applicable to numerical expressions.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 &lt; expr2</pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Boolean value, or series of boolean values.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_<=.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_<=</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">&lt;=</h3></div></div><div class="tv-pine-reference-item__text tv-text">Less than or equal to. Applicable to numerical expressions.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 &lt;= expr2</pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Boolean value, or series of boolean values.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_==.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_==</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">==</h3></div></div><div class="tv-pine-reference-item__text tv-text">Equal to. Applicable to expressions of any type.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 == expr2</pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Boolean value, or series of boolean values.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_=>.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_=></h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">=&gt;</h3></div></div><div class="tv-pine-reference-item__text tv-text">The '=&gt;' operator is used in user-defined function declarations and in <a class="js-reference" data-href="kw_switch" href="#kw_switch">switch</a> statements.</div><div class="tv-pine-reference-item__text tv-text">The function declaration syntax is:</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">&lt;identifier&gt;([&lt;parameter_name&gt;[=&lt;default_value&gt;]], ...) =&gt;
+    &lt;local_block&gt;
+    &lt;function_result&gt;</pre><div class="tv-pine-reference-item__text tv-text">A &lt;local_block&gt; is zero or more Pine Script® statements.</div><div class="tv-pine-reference-item__text tv-text">The &lt;function_result&gt; is a variable, an expression, or a tuple.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="op_=&gt;_example_0" data-lang="pine_v5"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">5</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"=&gt;"</span><span class="mtk13">)</span></span><br/><span><span class="mtk9">// single-line function</span></span><br/><span><span class="mtk15">f1</span><span class="mtk13">(</span><span class="mtk33">x</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">y</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">=&gt;</span><span class="mtk1"> </span><span class="mtk33">x</span><span class="mtk1"> </span><span class="mtk18">+</span><span class="mtk1"> </span><span class="mtk33">y</span></span><br/><span><span class="mtk9">// multi-line function</span></span><br/><span><span class="mtk15">f2</span><span class="mtk13">(</span><span class="mtk33">x</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">y</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">=&gt;</span><span class="mtk1"> </span></span><br/><span><span class="mtk1">    </span><span class="mtk33">sum</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk33">x</span><span class="mtk1"> </span><span class="mtk18">+</span><span class="mtk1"> </span><span class="mtk33">y</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">sumChange</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk16">ta.change</span><span class="mtk13">(</span><span class="mtk33">sum</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk12">10</span><span class="mtk13">)</span></span><br/><span><span class="mtk1">    </span><span class="mtk9">// Function automatically returns the last express</span><span class="mtk9">ion used in it</span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk33">f1</span><span class="mtk13">(</span><span class="mtk12">30</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk12">8</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">+</span><span class="mtk1"> </span><span class="mtk33">f2</span><span class="mtk13">(</span><span class="mtk12">1</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk12">3</span><span class="mtk13">))</span></span><br/></code></pre><div class="tv-pine-reference-item__sub-header">Remarks</div><div class="tv-pine-reference-item__text tv-text">You can learn more about user-defined functions in the User Manual's pages on <a href="https://www.tradingview.com/pine-script-docs/language/user-defined-functions/" target="_blank">Declaring functions</a> and <a href="https://www.tradingview.com/pine-script-docs/concepts/libraries/" target="_blank">Libraries</a>.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_>.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_></h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">&gt;</h3></div></div><div class="tv-pine-reference-item__text tv-text">Greater than. Applicable to numerical expressions.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 &gt; expr2</pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Boolean value, or series of boolean values.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_>=.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_>=</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">&gt;=</h3></div></div><div class="tv-pine-reference-item__text tv-text">Greater than or equal to. Applicable to numerical expressions.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 &gt;= expr2</pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">Boolean value, or series of boolean values.</div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_?:.html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_?:</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">?:</h3></div></div><div class="tv-pine-reference-item__text tv-text">Ternary conditional operator.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1 ? expr2 : expr3</pre><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="op_?:" data-lang="pine_v5"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">5</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"?:"</span><span class="mtk13">)</span></span><br/><span><span class="mtk9">// Draw circles at the bars where open crosses clo</span><span class="mtk9">se</span></span><br/><span><span class="mtk33">s2</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk16">ta.cross</span><span class="mtk13">(</span><span class="mtk11">open</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk11">close</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">?</span><span class="mtk1"> </span><span class="mtk16">math.avg</span><span class="mtk13">(</span><span class="mtk11">open</span><span class="mtk18">,</span><span class="mtk11">close</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">:</span><span class="mtk1"> </span><span class="mtk11">na</span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk33">s2</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">style</span><span class="mtk18">=</span><span class="mtk11">plot.style_circles</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">linewidth</span><span class="mtk18">=</span><span class="mtk12">2</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">color</span><span class="mtk18">=</span><span class="mtk11">color.red</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk9">// Combination of ?: operators for 'switch'-like l</span><span class="mtk9">ogic</span></span><br/><span><span class="mtk33">c</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk11">timeframe.isintraday</span><span class="mtk1"> </span><span class="mtk18">?</span><span class="mtk1"> </span><span class="mtk11">color.red</span><span class="mtk1"> </span><span class="mtk18">:</span><span class="mtk1"> </span><span class="mtk11">timeframe.isdaily</span><span class="mtk1"> </span><span class="mtk18">?</span><span class="mtk1"> </span><span class="mtk11">color.green</span><span class="mtk1"> </span><span class="mtk18">:</span><span class="mtk1"> </span><span class="mtk11">timeframe.isweekly</span><span class="mtk1"> </span><span class="mtk18">?</span><span class="mtk1"> </span><span class="mtk11">color.blue</span><span class="mtk1"> </span><span class="mtk18">:</span><span class="mtk1"> </span><span class="mtk11">color.gray</span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk11">hl2</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">color</span><span class="mtk18">=</span><span class="mtk33">c</span><span class="mtk13">)</span></span><br/></code></pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">expr2 if expr1 is evaluated to true, expr3 otherwise. Zero value (0 and also NaN, +Infinity, -Infinity) is considered to be false, any other value is true.</div><div class="tv-pine-reference-item__sub-header">Remarks</div><div class="tv-pine-reference-item__text tv-text">Use <a class="js-reference" data-href="var_na" href="#var_na">na</a> for 'else' branch if you do not need it.</div><div class="tv-pine-reference-item__text tv-text">You can combine two or more <a class="js-reference" data-href="op_?:" href="#op_?:">?:</a> operators to achieve the equivalent of a 'switch'-like statement (see examples above).</div><div class="tv-pine-reference-item__text tv-text">You may use arithmetic operators with numbers as well as with series variables. In case of usage with series the operators are applied elementwise.</div><div class="tv-pine-reference-item__sub-header">See also</div><div class="tv-pine-reference-item__see-also"><a class="tv-tag-label js-reference" data-href="var_na" href="#var_na">na</a></div></div>
+</div>
+</section><section id="pine-script-reference_v5_op_[].html" class="content-section">
+<h2 class="tv-pine-reference-item__header">pine-script-reference_v5_op_[]</h2>
+<div class="content-section">
+<div class="tv-pine-reference-item__content"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">[]</h3></div></div><div class="tv-pine-reference-item__text tv-text">Series subscript. Provides access to previous values of series expr1. expr2 is the number of bars back, and must be numerical. Floats will be rounded down.</div><div class="tv-pine-reference-item__sub-header">Syntax</div><pre class="tv-pine-reference-item__syntax selected">expr1[expr2]</pre><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="op_[]" data-lang="pine_v5"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">5</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"[]"</span><span class="mtk13">)</span></span><br/><span><span class="mtk9">// [] can be used to "save" variable value between</span><span class="mtk9"> bars</span></span><br/><span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">0.0</span><span class="mtk1"> </span><span class="mtk9">// declare `a`</span></span><br/><span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">:=</span><span class="mtk1"> </span><span class="mtk33">a</span><span class="mtk13">[</span><span class="mtk12">1</span><span class="mtk13">]</span><span class="mtk1"> </span><span class="mtk9">// immediately set current value to the same as pr</span><span class="mtk9">evious. `na` in the beginning of history</span></span><br/><span><span class="mtk18">if</span><span class="mtk1"> </span><span class="mtk11">high</span><span class="mtk1"> </span><span class="mtk18">==</span><span class="mtk1"> </span><span class="mtk11">low</span><span class="mtk1"> </span><span class="mtk9">// if some condition - change `a` value to another</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">a</span><span class="mtk1"> </span><span class="mtk18">:=</span><span class="mtk1"> </span><span class="mtk11">low</span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk33">a</span><span class="mtk13">)</span></span><br/></code></pre><div class="tv-pine-reference-item__sub-header">Returns</div><div class="tv-pine-reference-item__text tv-text">A series of values.</div><div class="tv-pine-reference-item__sub-header">See also</div><div class="tv-pine-reference-item__see-also"><a class="tv-tag-label js-reference" data-href="fun_math.floor" href="#fun_math.floor">math.floor</a></div></div>
+</div>
+</section>
+        
+    <div class="nav-buttons">
+        <button onclick="window.scrollTo(0, 0)" class="nav-button">Back to Top</button>
+        <a href="../index.html" class="nav-button">Back to TOC</a>
+    </div>
+    
+    </body>
+    </html>
+    
