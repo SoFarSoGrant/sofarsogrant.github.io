@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoFarSoGrant</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /*font-family: 'VT323', monospace;*/
+            font-family: "Press Start 2P", system-ui;
+            background-color: #000;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://sofarsogrant.github.io/background.jpg');
+            background-size: cover;
+            background-position: center;
+            transition: filter 0.5s ease;
+            z-index: 0;
+        }
+
+        .background.blur {
+            filter: blur(5px);
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .start-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-family: "Press Start 2P", system-ui;
+            font-size: 36px;
+            cursor: pointer;
+            padding: 20px;
+            position: relative;
+            animation: blink 1s infinite;
+            text-shadow: 0 0 5px #fecd86,
+                         0 0 10px #fecd86,
+                         0 0 15px #fecd86,
+                         0 0 20px #fecd86;
+            letter-spacing: 2px;
+        }
+
+        @keyframes blink {
+            0% { opacity: .5; text-shadow: 0 0 5px #fecd86, 0 0 10px #fecd86, 0 0 15px #fecd86, 0 0 20px #fecd86; }
+            50% { opacity: 0.3; text-shadow: none; }
+            100% { opacity: .5; text-shadow: 0 0 5px #fecd86, 0 0 10px #fecd86, 0 0 15px #fecd86, 0 0 20px #fecd86; }
+        }
+
+        .menu {
+            display: none;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border: 4px solid #fecd86;
+            box-shadow: 0 0 10px #fecd86,
+                       inset 0 0 10px #fecd86;
+        }
+
+        .menu.active {
+            display: block;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .menu-item {
+            display: block;
+            color: #fecd86;
+            text-decoration: none;
+            margin: 15px 0;
+            padding: 10px;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            text-shadow: 0 0 5px #fecd86;
+        }
+
+        .menu-item:hover {
+            color: #000;
+            background: #fecd86;
+            transform: scale(1.1);
+            text-shadow: none;
+            box-shadow: 0 0 15px #fecd86;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        @keyframes scanline {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom,
+                rgba(15, 255, 15, 0) 0%,
+                rgba(15, 255, 15, 0.1) 50%,
+                rgba(15, 255, 15, 0) 100%);
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="overlay"></div>
+    <div class="scanline"></div>
+    <div class="container">
+        <button class="start-btn">PRESS START</button>
+        <div class="menu">
+            <a href="page1.html" class="menu-item">Document 1</a>
+            <a href="page2.html" class="menu-item">Document 2</a>
+        </div>
+    </div>
+
+    <script>
+        const startBtn = document.querySelector('.start-btn');
+        const menu = document.querySelector('.menu');
+        const background = document.querySelector('.background');
+        
+        startBtn.addEventListener('click', () => {
+            menu.classList.toggle('active');
+            background.classList.toggle('blur');
+            if (menu.classList.contains('active')) {
+                startBtn.textContent = 'close';
+                startBtn.style.animation = 'none';
+            } else {
+                startBtn.textContent = 'start';
+                startBtn.style.animation = 'blink 1s infinite';
+            }
+        });
+    </script>
+</body>
+</html>
