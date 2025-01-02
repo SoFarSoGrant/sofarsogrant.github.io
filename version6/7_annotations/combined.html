@@ -1,0 +1,348 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>annotations</title>
+        <style>
+        /* Base styles */
+:root {
+    --tv-primary-color: #2962FF;
+    --tv-secondary-color: #1E88E5;
+    --tv-background-color: #FFFFFF;
+    --tv-border-color: #e0e3eb;
+    --tv-text-color: #131722;
+    --tv-text-secondary: #787B86;
+    --tv-code-background: #F0F3FA;
+}
+
+body {
+    font-family: -apple-system,BlinkMacSystemFont,Trebuchet MS,Roboto,Ubuntu,sans-serif;
+    line-height: 1.6;
+    color: var(--tv-text-color);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #F8F9FD;
+}
+
+/* TOC styles */
+#toc-container {
+    background: var(--tv-background-color);
+    padding: 24px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid var(--tv-border-color);
+}
+
+.section-dropdown {
+    margin: 12px 0;
+}
+
+.section-title {
+    background: var(--tv-primary-color);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.section-content {
+    display: none;
+    padding: 12px 16px;
+    background: var(--tv-code-background);
+    border-radius: 0 0 4px 4px;
+    margin-top: 1px;
+}
+
+.section-content.active {
+    display: block;
+}
+
+.section-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.section-content li {
+    margin: 8px 0;
+}
+
+.section-content a {
+    color: var(--tv-primary-color);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.section-content a:hover {
+    text-decoration: underline;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border: 1px solid var(--tv-border-color);
+    border-radius: 4px;
+    font-size: 14px;
+    background: var(--tv-code-background);
+}
+
+/* Content section styles */
+.content-section {
+    background: var(--tv-background-color);
+    padding: 24px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid var(--tv-border-color);
+}
+
+/* Header styles */
+.tv-pine-reference-item__header {
+    font-size: 40px;
+    color: var(--tv-text-color);
+    margin: 0 0 20px 0;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--tv-border-color);
+    font-weight: 600;
+}
+
+.tv-pine-reference-item__sub-header {
+    color-scheme: light;
+    font-feature-settings: "tnum" on,"lnum" on;
+    color: #5d606b;
+    font-size: 10px;
+    margin-top: 24px;
+    text-transform: uppercase;
+}
+
+/* Text styles */
+.tv-pine-reference-item__text {
+    margin: 12px 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--tv-text-color);
+}
+
+/* Code block styles */
+pre {
+    background: var(--tv-code-background);
+    padding: 16px;
+    border-radius: 4px;
+    overflow-x: auto;
+    border: 1px solid var(--tv-border-color);
+    margin: 16px 0;
+}
+
+code {
+    font-family: 'JetBrains Mono', 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+    font-size: 14px;
+    color: var(--tv-text-color);
+}
+
+/* Type section */
+.type-section {
+    /*
+    background: var(--tv-code-background);
+    padding: 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+    border: 1px solid var(--tv-border-color);
+    */
+}
+
+.type-section strong {
+    color: var(--tv-text-color);
+    font-weight: 600;
+}
+
+/* Example section */
+.example-section {
+    /*background: var(--tv-code-background);
+    padding: 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+    border: 1px solid var(--tv-border-color);*/
+}
+
+.example-section strong {
+    color-scheme: light;
+    font-feature-settings: "tnum" on,"lnum" on;
+    color: #5d606b;
+    font-size: 10px;
+    margin-top: 24px;
+    text-transform: uppercase;
+}
+
+/* See also section */
+.tv-pine-reference-item__see-also {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.tv-tag-label {
+    background: var(--tv-code-background);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--tv-primary-color);
+    border: 1px solid var(--tv-border-color);
+}
+
+/* Navigation */
+.nav-buttons {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    gap: 12px;
+    z-index: 1000;
+}
+
+.nav-button {
+    background: var(--tv-primary-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.nav-button:hover {
+    background: var(--tv-secondary-color);
+}
+
+/* Function signatures */
+.tv-pine-reference-item__signature {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--tv-code-background);
+    padding: 16px;
+    border-radius: 4px;
+    margin: 16px 0;
+    border: 1px solid var(--tv-border-color);
+    overflow-x: auto;
+}
+
+/* Parameter lists */
+.tv-pine-reference-item__parameters {
+    margin: 16px 0;
+}
+
+.tv-pine-reference-item__parameter {
+    margin: 12px 0;
+    padding-left: 16px;
+    border-left: 3px solid var(--tv-border-color);
+}
+
+.parameter-name {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--tv-primary-color);
+    font-weight: 600;
+}
+
+/* Returns section */
+.tv-pine-reference-item__returns {
+    margin: 16px 0;
+    padding: 16px;
+    background: var(--tv-code-background);
+    border-radius: 4px;
+    border: 1px solid var(--tv-border-color);
+}
+
+/* Description lists */
+dl {
+    margin: 16px 0;
+}
+
+dt {
+    font-weight: 600;
+    color: var(--tv-text-color);
+    margin-top: 12px;
+}
+
+dd {
+    margin-left: 16px;
+    color: var(--tv-text-secondary);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid var(--tv-border-color);
+    text-align: left;
+}
+
+th {
+    background: var(--tv-code-background);
+    font-weight: 600;
+}
+        html {
+            scroll-behavior: smooth;
+        }
+        </style>
+    </head>
+    <body id="top">
+        <h1 class="tv-pine-reference-item__header">annotations</h1>
+        <div class="content-section">
+<div class="tv-pine-reference-item__content" id="@description"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">@description</h3></div></div><div class="tv-pine-reference-item__text tv-text">Sets a custom description for scripts that use the <a class="js-reference" data-href="fun_library" href="#fun_library">library</a> declaration statement. The text provided with this annotation will be used to pre-fill the "Description" field in the publication dialogue.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@description" data-lang="pine_v6"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">6</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@description</span><span class="mtk9"> Provides a tool to quickly output a label on the </span><span class="mtk9">chart.</span></span><br/><span><span class="mtk16">library</span><span class="mtk13">(</span><span class="mtk29">"MyLibrary"</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@function</span><span class="mtk9"> Outputs a label with `labelText` on the bar's hig</span><span class="mtk9">h.</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@param</span><span class="mtk9"> labelText (series string) The text to display on </span><span class="mtk9">the label.</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@returns</span><span class="mtk9"> Drawn label.</span></span><br/><span><span class="mtk18">export</span><span class="mtk1"> </span><span class="mtk33">drawLabel</span><span class="mtk13">(</span><span class="mtk18 mtkb">string</span><span class="mtk1"> </span><span class="mtk33">labelText</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">=&gt;</span></span><br/><span><span class="mtk1">    </span><span class="mtk16">label.new</span><span class="mtk13">(</span><span class="mtk11">bar_index</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk11">high</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">text</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk33">labelText</span><span class="mtk13">)</span></span><br/></code></pre></div>
+</div><p><a href="../pine-script-v5-combined.html">Back to Main Documentation</a></p><div class="content-section">
+<div class="tv-pine-reference-item__content" id="@enum"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">@enum</h3></div></div><div class="tv-pine-reference-item__text tv-text">If placed above an enum declaration, it adds a custom description for the enum. The Pine Editor's autosuggest uses this description and displays it when a user hovers over the enum name. When used in library scripts, the descriptions of all enums using the <a class="js-reference" data-href="kw_export" href="#kw_export">export</a> keyword will pre-fill the "Description" field in the publication dialogue.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@enum" data-lang="pine_v6"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">6</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"Session highlight"</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">overlay</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk11">true</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@enum</span><span class="mtk9">        Contains fields with popular timezones as </span><span class="mtk9">titles.</span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@field</span><span class="mtk9"> exch  Has an empty string as the title to represe</span><span class="mtk9">nt the chart timezone.</span></span><br/><span><span class="mtk18">enum</span><span class="mtk1"> </span><span class="mtk33">tz</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">utc</span><span class="mtk1">  </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk29">"UTC"</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">exch</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk29">""</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">ny</span><span class="mtk1">   </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk29">"America/New_York"</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">chi</span><span class="mtk1">  </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk29">"America/Chicago"</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">lon</span><span class="mtk1">  </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk29">"Europe/London"</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">tok</span><span class="mtk1">  </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk29">"Asia/Tokyo"</span></span><br/><span><span></span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@variable</span><span class="mtk9"> The session string.</span></span><br/><span><span class="mtk33">selectedSession</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk16">input.session</span><span class="mtk13">(</span><span class="mtk29">"1200-1500"</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk29">"Session"</span><span class="mtk13">)</span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@variable</span><span class="mtk9"> The selected timezone. The input's dropdown conta</span><span class="mtk9">ins the fields in the `tz` enum.</span></span><br/><span><span class="mtk33">selectedTimezone</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk16">input.enum</span><span class="mtk13">(</span><span class="mtk33">tz</span><span class="mtk1">.</span><span class="mtk33">utc</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk29">"Session Timezone"</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@variable</span><span class="mtk9"> Is `true` if the current bar's time is in the spe</span><span class="mtk9">cified session.</span></span><br/><span><span class="mtk18 mtkb">bool</span><span class="mtk1"> </span><span class="mtk33">inSession</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk11">false</span></span><br/><span><span class="mtk18">if</span><span class="mtk1"> </span><span class="mtk18">not</span><span class="mtk1"> </span><span class="mtk16">na</span><span class="mtk13">(</span><span class="mtk16">time</span><span class="mtk13">(</span><span class="mtk29">""</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">selectedSession</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk16">str.tostring</span><span class="mtk13">(</span><span class="mtk33">selectedTimezone</span><span class="mtk13">)))</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">inSession</span><span class="mtk1"> </span><span class="mtk18">:=</span><span class="mtk1"> </span><span class="mtk11">true</span></span><br/><span><span></span></span><br/><span><span class="mtk9">// Highlight the background when `inSession` is `t</span><span class="mtk9">rue`.</span></span><br/><span><span class="mtk16">bgcolor</span><span class="mtk13">(</span><span class="mtk33">inSession</span><span class="mtk1"> </span><span class="mtk18">?</span><span class="mtk1"> </span><span class="mtk16">color.new</span><span class="mtk13">(</span><span class="mtk11">color.green</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk12">90</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">:</span><span class="mtk1"> </span><span class="mtk11">na</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">title</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk29">"Active session highlight"</span><span class="mtk13">)</span></span><br/></code></pre></div>
+</div><p><a href="../pine-script-v5-combined.html">Back to Main Documentation</a></p><div class="content-section">
+<div class="tv-pine-reference-item__content" id="@field"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">@field</h3></div></div><div class="tv-pine-reference-item__text tv-text">If placed above a <a class="js-reference" data-href="kw_type" href="#kw_type">type</a> or <a class="js-reference" data-href="kw_enum" href="#kw_enum">enum</a> declaration, it adds a custom description for a field of the type/enum. After the annotation, users should specify the field name, followed by its description.</div><div class="tv-pine-reference-item__text tv-text">The Pine Editor's autosuggest uses this description and displays it when a user hovers over the type/enum or field name. When used in <a class="js-reference" data-href="fun_library" href="#fun_library">library</a> scripts, the descriptions of all types/enums using the <a class="js-reference" data-href="kw_export" href="#kw_export">export</a> keyword will pre-fill the "Description" field in the publication dialogue.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@field" data-lang="pine_v6"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">6</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"New high over the last 20 bars"</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">overlay</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk11">true</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@type</span><span class="mtk9"> A point on a chart.</span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@field</span><span class="mtk9"> index The index of the bar where the point is loc</span><span class="mtk9">ated, i.e., its `x` coordinate.</span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@field</span><span class="mtk9"> price The price where the point is located, i.e.,</span><span class="mtk9"> its `y` coordinate.</span></span><br/><span><span class="mtk18">type</span><span class="mtk1"> </span><span class="mtk33">Point</span></span><br/><span><span class="mtk1">    </span><span class="mtk18 mtkb">int</span><span class="mtk1"> </span><span class="mtk33">index</span></span><br/><span><span class="mtk1">    </span><span class="mtk18 mtkb">float</span><span class="mtk1"> </span><span class="mtk33">price</span></span><br/><span><span></span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@variable</span><span class="mtk9"> If the current `high` is the highest over the las</span><span class="mtk9">t 20 bars, returns a new `Point` instance, `na` ot</span><span class="mtk9">herwise.</span></span><br/><span><span class="mtk18 mtkb">Point</span><span class="mtk1"> </span><span class="mtk33">highest</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk11">na</span></span><br/><span><span></span></span><br/><span><span class="mtk18">if</span><span class="mtk1"> </span><span class="mtk16">ta.highestbars</span><span class="mtk13">(</span><span class="mtk11">high</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk12">20</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">==</span><span class="mtk1"> </span><span class="mtk12">0</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">highest</span><span class="mtk1"> </span><span class="mtk18">:=</span><span class="mtk1"> </span><span class="mtk33">Point</span><span class="mtk1">.</span><span class="mtk15">new</span><span class="mtk13">(</span><span class="mtk11">bar_index</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk11">high</span><span class="mtk13">)</span></span><br/><span><span class="mtk1">    </span><span class="mtk16">label.new</span><span class="mtk13">(</span><span class="mtk33">highest</span><span class="mtk1">.</span><span class="mtk33">index</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">highest</span><span class="mtk1">.</span><span class="mtk33">price</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk16">str.tostring</span><span class="mtk13">(</span><span class="mtk33">highest</span><span class="mtk1">.</span><span class="mtk33">price</span><span class="mtk13">))</span></span><br/></code></pre></div>
+</div><p><a href="../pine-script-v5-combined.html">Back to Main Documentation</a></p><div class="content-section">
+<div class="tv-pine-reference-item__content" id="@function"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">@function</h3></div></div><div class="tv-pine-reference-item__text tv-text">If placed above a function declaration, it adds a custom description for the function.</div><div class="tv-pine-reference-item__text tv-text">The Pine Editor's autosuggest uses this description and displays it when a user hovers over the function name. When used in <a class="js-reference" data-href="fun_library" href="#fun_library">library</a> scripts, the descriptions of all functions using the <a class="js-reference" data-href="kw_export" href="#kw_export">export</a> keyword will pre-fill the "Description" field in the publication dialogue.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@function" data-lang="pine_v6"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">6</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@description</span><span class="mtk9"> Provides a tool to quickly output a label on the </span><span class="mtk9">chart.</span></span><br/><span><span class="mtk16">library</span><span class="mtk13">(</span><span class="mtk29">"MyLibrary"</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@function</span><span class="mtk9"> Outputs a label with `labelText` on the bar's hig</span><span class="mtk9">h.</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@param</span><span class="mtk9"> labelText (series string) The text to display on </span><span class="mtk9">the label.</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@returns</span><span class="mtk9"> Drawn label.</span></span><br/><span><span class="mtk18">export</span><span class="mtk1"> </span><span class="mtk33">drawLabel</span><span class="mtk13">(</span><span class="mtk18 mtkb">string</span><span class="mtk1"> </span><span class="mtk33">labelText</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">=&gt;</span></span><br/><span><span class="mtk1">    </span><span class="mtk16">label.new</span><span class="mtk13">(</span><span class="mtk11">bar_index</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk11">high</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">text</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk33">labelText</span><span class="mtk13">)</span></span><br/></code></pre></div>
+</div><p><a href="../pine-script-v5-combined.html">Back to Main Documentation</a></p><div class="content-section">
+<div class="tv-pine-reference-item__content" id="@param"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">@param</h3></div></div><div class="tv-pine-reference-item__text tv-text">If placed above a function declaration, it adds a custom description for a function parameter. After the annotation, users should specify the parameter name, then its description.</div><div class="tv-pine-reference-item__text tv-text">The Pine Editor's autosuggest uses this description and displays it when a user hovers over the function name. When used in <a class="js-reference" data-href="fun_library" href="#fun_library">library</a> scripts, the descriptions of all functions using the <a class="js-reference" data-href="kw_export" href="#kw_export">export</a> keyword will pre-fill the "Description" field in the publication dialogue.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@param" data-lang="pine_v6"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">6</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@description</span><span class="mtk9"> Provides a tool to quickly output a label on the </span><span class="mtk9">chart.</span></span><br/><span><span class="mtk16">library</span><span class="mtk13">(</span><span class="mtk29">"MyLibrary"</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@function</span><span class="mtk9"> Outputs a label with `labelText` on the bar's hig</span><span class="mtk9">h.</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@param</span><span class="mtk9"> labelText (series string) The text to display on </span><span class="mtk9">the label.</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@returns</span><span class="mtk9"> Drawn label.</span></span><br/><span><span class="mtk18">export</span><span class="mtk1"> </span><span class="mtk33">drawLabel</span><span class="mtk13">(</span><span class="mtk18 mtkb">string</span><span class="mtk1"> </span><span class="mtk33">labelText</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">=&gt;</span></span><br/><span><span class="mtk1">    </span><span class="mtk16">label.new</span><span class="mtk13">(</span><span class="mtk11">bar_index</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk11">high</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">text</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk33">labelText</span><span class="mtk13">)</span></span><br/></code></pre></div>
+</div><p><a href="../pine-script-v5-combined.html">Back to Main Documentation</a></p><div class="content-section">
+<div class="tv-pine-reference-item__content" id="@returns"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">@returns</h3></div></div><div class="tv-pine-reference-item__text tv-text">If placed above a function declaration, it adds a custom description for what that function returns.</div><div class="tv-pine-reference-item__text tv-text">The Pine Editor's autosuggest uses this description and displays it when a user hovers over the function name. When used in <a class="js-reference" data-href="fun_library" href="#fun_library">library</a> scripts, the descriptions of all functions using the <a class="js-reference" data-href="kw_export" href="#kw_export">export</a> keyword will pre-fill the "Description" field in the publication dialogue.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@returns" data-lang="pine_v6"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">6</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@description</span><span class="mtk9"> Provides a tool to quickly output a label on the </span><span class="mtk9">chart.</span></span><br/><span><span class="mtk16">library</span><span class="mtk13">(</span><span class="mtk29">"MyLibrary"</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@function</span><span class="mtk9"> Outputs a label with `labelText` on the bar's hig</span><span class="mtk9">h.</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@param</span><span class="mtk9"> labelText (series string) The text to display on </span><span class="mtk9">the label.</span></span><br/><span><span class="mtk9">// </span><span class="mtk9 mtkb">@returns</span><span class="mtk9"> Drawn label.</span></span><br/><span><span class="mtk18">export</span><span class="mtk1"> </span><span class="mtk33">drawLabel</span><span class="mtk13">(</span><span class="mtk18 mtkb">string</span><span class="mtk1"> </span><span class="mtk33">labelText</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">=&gt;</span></span><br/><span><span class="mtk1">    </span><span class="mtk16">label.new</span><span class="mtk13">(</span><span class="mtk11">bar_index</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk11">high</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">text</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk33">labelText</span><span class="mtk13">)</span></span><br/></code></pre></div>
+</div><p><a href="../pine-script-v5-combined.html">Back to Main Documentation</a></p><div class="content-section">
+<div class="tv-pine-reference-item__content" id="@strategy_alert_message"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">@strategy_alert_message</h3></div></div><div class="tv-pine-reference-item__text tv-text">If used within a <a class="js-reference" data-href="fun_strategy" href="#fun_strategy">strategy</a> script, it provides a default message to pre-fill the "Message" field in the alert creation dialogue.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@strategy_alert_message" data-lang="pine_v6"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">6</span></span><br/><span><span class="mtk16">strategy</span><span class="mtk13">(</span><span class="mtk29">"My strategy"</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">overlay</span><span class="mtk18">=</span><span class="mtk11">true</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">margin_long</span><span class="mtk18">=</span><span class="mtk12">100</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">margin_short</span><span class="mtk18">=</span><span class="mtk12">100</span><span class="mtk13">)</span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@strategy</span><span class="mtk9">_alert_message Strategy alert on symbol {{ticker}}</span></span><br/><span><span></span></span><br/><span><span class="mtk33">longCondition</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk16">ta.crossover</span><span class="mtk13">(</span><span class="mtk16">ta.sma</span><span class="mtk13">(</span><span class="mtk11">close</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk12">14</span><span class="mtk13">)</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk16">ta.sma</span><span class="mtk13">(</span><span class="mtk11">close</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk12">28</span><span class="mtk13">))</span></span><br/><span><span class="mtk18">if</span><span class="mtk1"> </span><span class="mtk13">(</span><span class="mtk33">longCondition</span><span class="mtk13">)</span></span><br/><span><span class="mtk1">    </span><span class="mtk16">strategy.entry</span><span class="mtk13">(</span><span class="mtk29">"My Long Entry Id"</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk11">strategy.long</span><span class="mtk13">)</span></span><br/><span><span class="mtk16">strategy.exit</span><span class="mtk13">(</span><span class="mtk29">"Exit"</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk29">"My Long Entry Id"</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">profit</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">10</span><span class="mtk1"> </span><span class="mtk18">/</span><span class="mtk1"> </span><span class="mtk11">syminfo.mintick</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">loss</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk12">10</span><span class="mtk1"> </span><span class="mtk18">/</span><span class="mtk1"> </span><span class="mtk11">syminfo.mintick</span><span class="mtk13">)</span></span><br/></code></pre></div>
+</div><p><a href="../pine-script-v5-combined.html">Back to Main Documentation</a></p><div class="content-section">
+<div class="tv-pine-reference-item__content" id="@type"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">@type</h3></div></div><div class="tv-pine-reference-item__text tv-text">If placed above a type declaration, it adds a custom description for the type.</div><div class="tv-pine-reference-item__text tv-text">The Pine Editor's autosuggest uses this description and displays it when a user hovers over the type name. When used in <a class="js-reference" data-href="fun_library" href="#fun_library">library</a> scripts, the descriptions of all types using the <a class="js-reference" data-href="kw_export" href="#kw_export">export</a> keyword will pre-fill the "Description" field in the publication dialogue.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@type" data-lang="pine_v6"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">6</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"New high over the last 20 bars"</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">overlay</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk11">true</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@type</span><span class="mtk9"> A point on a chart.</span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@field</span><span class="mtk9"> index The index of the bar where the point is loc</span><span class="mtk9">ated, i.e., its `x` coordinate.</span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@field</span><span class="mtk9"> price The price where the point is located, i.e.,</span><span class="mtk9"> its `y` coordinate.</span></span><br/><span><span class="mtk18">type</span><span class="mtk1"> </span><span class="mtk33">Point</span></span><br/><span><span class="mtk1">    </span><span class="mtk18 mtkb">int</span><span class="mtk1"> </span><span class="mtk33">index</span></span><br/><span><span class="mtk1">    </span><span class="mtk18 mtkb">float</span><span class="mtk1"> </span><span class="mtk33">price</span></span><br/><span><span></span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@variable</span><span class="mtk9"> If the current `high` is the highest over the las</span><span class="mtk9">t 20 bars, returns a new `Point` instance, `na` ot</span><span class="mtk9">herwise.</span></span><br/><span><span class="mtk18 mtkb">Point</span><span class="mtk1"> </span><span class="mtk33">highest</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk11">na</span></span><br/><span><span></span></span><br/><span><span class="mtk18">if</span><span class="mtk1"> </span><span class="mtk16">ta.highestbars</span><span class="mtk13">(</span><span class="mtk11">high</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk12">20</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">==</span><span class="mtk1"> </span><span class="mtk12">0</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">highest</span><span class="mtk1"> </span><span class="mtk18">:=</span><span class="mtk1"> </span><span class="mtk33">Point</span><span class="mtk1">.</span><span class="mtk15">new</span><span class="mtk13">(</span><span class="mtk11">bar_index</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk11">high</span><span class="mtk13">)</span></span><br/><span><span class="mtk1">    </span><span class="mtk16">label.new</span><span class="mtk13">(</span><span class="mtk33">highest</span><span class="mtk1">.</span><span class="mtk33">index</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">highest</span><span class="mtk1">.</span><span class="mtk33">price</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk16">str.tostring</span><span class="mtk13">(</span><span class="mtk33">highest</span><span class="mtk1">.</span><span class="mtk33">price</span><span class="mtk13">))</span></span><br/></code></pre></div>
+</div><p><a href="../pine-script-v5-combined.html">Back to Main Documentation</a></p><div class="content-section">
+<div class="tv-pine-reference-item__content" id="@variable"><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">@variable</h3></div></div><div class="tv-pine-reference-item__text tv-text">If placed above a variable declaration, it adds a custom description for the variable.</div><div class="tv-pine-reference-item__text tv-text">The Pine Editor's autosuggest uses this description and displays it when a user hovers over the variable name.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@variable" data-lang="pine_v6"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">6</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"New high over the last 20 bars"</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">overlay</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk11">true</span><span class="mtk13">)</span></span><br/><span><span></span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@type</span><span class="mtk9"> A point on a chart.</span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@field</span><span class="mtk9"> index The index of the bar where the point is loc</span><span class="mtk9">ated, i.e., its `x` coordinate.</span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@field</span><span class="mtk9"> price The price where the point is located, i.e.,</span><span class="mtk9"> its `y` coordinate.</span></span><br/><span><span class="mtk18">type</span><span class="mtk1"> </span><span class="mtk33">Point</span></span><br/><span><span class="mtk1">    </span><span class="mtk18 mtkb">int</span><span class="mtk1"> </span><span class="mtk33">index</span></span><br/><span><span class="mtk1">    </span><span class="mtk18 mtkb">float</span><span class="mtk1"> </span><span class="mtk33">price</span></span><br/><span><span></span></span><br/><span><span class="mtk9">//</span><span class="mtk9 mtkb">@variable</span><span class="mtk9"> If the current `high` is the highest over the las</span><span class="mtk9">t 20 bars, returns a new `Point` instance, `na` ot</span><span class="mtk9">herwise.</span></span><br/><span><span class="mtk18 mtkb">Point</span><span class="mtk1"> </span><span class="mtk33">highest</span><span class="mtk1"> </span><span class="mtk18">=</span><span class="mtk1"> </span><span class="mtk11">na</span></span><br/><span><span></span></span><br/><span><span class="mtk18">if</span><span class="mtk1"> </span><span class="mtk16">ta.highestbars</span><span class="mtk13">(</span><span class="mtk11">high</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk12">20</span><span class="mtk13">)</span><span class="mtk1"> </span><span class="mtk18">==</span><span class="mtk1"> </span><span class="mtk12">0</span></span><br/><span><span class="mtk1">    </span><span class="mtk33">highest</span><span class="mtk1"> </span><span class="mtk18">:=</span><span class="mtk1"> </span><span class="mtk33">Point</span><span class="mtk1">.</span><span class="mtk15">new</span><span class="mtk13">(</span><span class="mtk11">bar_index</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk11">high</span><span class="mtk13">)</span></span><br/><span><span class="mtk1">    </span><span class="mtk16">label.new</span><span class="mtk13">(</span><span class="mtk33">highest</span><span class="mtk1">.</span><span class="mtk33">index</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk33">highest</span><span class="mtk1">.</span><span class="mtk33">price</span><span class="mtk18">,</span><span class="mtk1"> </span><span class="mtk16">str.tostring</span><span class="mtk13">(</span><span class="mtk33">highest</span><span class="mtk1">.</span><span class="mtk33">price</span><span class="mtk13">))</span></span><br/></code></pre></div>
+</div><p><a href="../pine-script-v5-combined.html">Back to Main Documentation</a></p><div class="content-section">
+<div class="tv-pine-reference-item__content" id="@version="><div class="tv-pine-reference-item__header-wrapper"><div class="tv-pine-reference-item__header_h3_wrapper"><h3 class="tv-pine-reference-item__header">@version=</h3></div></div><div class="tv-pine-reference-item__text tv-text">Specifies the Pine Script® version that the script will use. The number in this annotation should not be confused with the script's version number, which updates on every saved change to the code.</div><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><div class="example-section"><span>Example</span></div></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@version=_example_0" data-lang="pine_v6"><span><span class="mtk9">//</span><span class="mtk9 mtkb">@version=</span><span class="mtk9">6</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"Pine v5 Indicator"</span><span class="mtk13">)</span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk11">close</span><span class="mtk13">)</span></span><br/></code></pre><div class="tv-pine-reference-item__sub-header tv-pine-reference-item__example-header"><span>Example</span></div><pre class="tv-pine-reference-item__example"><code class="tv-pine-light" data-id="an_@version=_example_1" data-lang="pine_v6"><span><span class="mtk9">//This indicator has no version annotation, so it </span><span class="mtk9">will try to use v1.</span></span><br/><span><span class="mtk9">//Pine Script® v1 has no function named </span><span class="mtk9">`indicator()`, so the script will not compile.</span></span><br/><span><span class="mtk16">indicator</span><span class="mtk13">(</span><span class="mtk29">"Pine v1 Indicator"</span><span class="mtk13">)</span></span><br/><span><span class="mtk16">plot</span><span class="mtk13">(</span><span class="mtk11">close</span><span class="mtk13">)</span></span><br/></code></pre><div class="tv-pine-reference-item__sub-header">Remarks</div><div class="tv-pine-reference-item__text tv-text">The version should always be specified. Otherwise, for compatibility reasons, the script will be compiled using Pine Script® v1, which lacks most of the newer features and is bound to confuse. This annotation can be anywhere within a script, but we recommend placing it at the top of the code for readability.</div></div>
+</div><p><a href="../pine-script-v5-combined.html">Back to Main Documentation</a></p>
+        
+    <div class="nav-buttons">
+        <button onclick="window.scrollTo(0, 0)" class="nav-button">Back to Top</button>
+        <a href="../pinescript-v6-reference.html" class="nav-button">Back to TOC</a>
+    </div>
+    
+        <script>
+            // Handle smooth scrolling for reference links
+            document.addEventListener('click', function(e) {
+                if (e.target.matches('.tv-tag-label')) {
+                    e.preventDefault();
+                    const targetId = e.target.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        </script>
+    </body>
+    </html>
+    
